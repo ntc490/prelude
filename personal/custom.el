@@ -1,7 +1,13 @@
 ;;; Personal customizations
 
+(put 'set-goal-column 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'eval-expression 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+
 (add-to-list 'load-path (expand-file-name "programming" prelude-personal-dir))
-(prelude-require-packages '(ggtags p4 smart-tabs-mode))
+(prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors))
 
 ;;(setq p4-use-p4config-exclusively t)
 
@@ -42,9 +48,6 @@
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 ;;(setq backup-inhibited t)
-(put 'narrow-to-region 'disabled nil)
-(put 'eval-expression 'disabled nil)
-(put 'erase-buffer 'disabled nil)
 (setq line-number-mode t)
 (column-number-mode 'true)
 (setq compile-command "make")
@@ -67,3 +70,4 @@
 (require 'code-constructor)
 (require 'mouse)
 (require 'white-space)
+(require 'multiple-cursors)
