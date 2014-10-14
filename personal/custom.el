@@ -1,5 +1,12 @@
 ;;; Personal customizations
 
+(add-to-list 'load-path (expand-file-name "programming" prelude-personal-dir))
+(prelude-require-packages '(ggtags p4 smart-tabs-mode))
+
+;;(setq p4-use-p4config-exclusively t)
+
+
+;; Prelude overrides
 (setq prelude-whitespace nil)
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
@@ -24,3 +31,39 @@
 (global-set-key "\C-cn"  'cc-numbers)
 (global-set-key "\C-ct"  'cc-align-table)
 (global-set-key "\C-c^"  'cc-join-lines)
+
+
+(setq-default show-trailing-whitespace t)
+;;(menu-bar-mode 0)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "/")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+(setq read-buffer-completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
+;;(setq backup-inhibited t)
+(put 'narrow-to-region 'disabled nil)
+(put 'eval-expression 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(setq line-number-mode t)
+(column-number-mode 'true)
+(setq compile-command "make")
+
+;; Beginners might consider leaving this nil
+(setq inhibit-startup-message t)
+
+(defun my-c-mode-common-hook ()
+  (c-set-style "BSD")
+  (ggtags-mode 1)
+  (whitespace-indent-mode-hook))
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+(setq minibuffer-max-depth nil)
+
+
+
+(require 'mouse);; Additional modules
+(require 'p4)
+(require 'code-constructor)
+(require 'mouse)
+(require 'white-space)
