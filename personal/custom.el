@@ -7,12 +7,13 @@
 (put 'erase-buffer 'disabled nil)
 
 (add-to-list 'load-path (expand-file-name "programming" prelude-personal-dir))
-(prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors))
+(prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors expand-region))
 
 ;;(setq p4-use-p4config-exclusively t)
 
 
 ;; Prelude overrides
+(remove-hook 'prog-mode 'flycheck-mode)
 (setq prelude-whitespace nil)
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
