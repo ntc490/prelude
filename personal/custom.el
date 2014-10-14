@@ -1,12 +1,11 @@
+;;; Personal customizations
+
 (setq prelude-whitespace nil)
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
 
 ;; --------------- Generic key binding ---------------
 
-(global-set-key "\M-s"   'gtags-find-symbol)
-(global-set-key "\M-,"   'gtags-find-rtag)
-(global-set-key "\M-."   'gtags-find-from-here)
 (global-set-key "\M-g"   'goto-line)
 (global-set-key "\M-r"   'revert-buffer)
 (global-set-key "\M-o"   'tags-search)
