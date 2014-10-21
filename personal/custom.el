@@ -53,6 +53,10 @@
 (column-number-mode 'true)
 (setq compile-command "make")
 
+;; Don't use sudo to open read-only files
+(ad-disable-advice 'ido-find-file 'after 'find-file-sudo)
+(ad-activate 'ido-find-file)
+
 ;; Beginners might consider leaving this nil
 (setq inhibit-startup-message t)
 
