@@ -487,3 +487,30 @@ just the area around point."
       (goto-char (point-min))
       (while (re-search-forward "\\s-+" nil t)
         (replace-match " ")))))
+
+(defun cc-xargs (beg end)
+  "Join every line or token into a space separated list"
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-max))
+      ;; Join every line from end to beginning
+      (while (> (point) (point-min))
+        (join-line)
+        (end-of-line)
+        (beginning-of-line))
+      ;; Every token should have exactly one space between it and the next
+      (cc-collapse-space-region (point-min) (point-max)))))
+
+(defun cc-bprintf (beg end)
+  "Take a space separated list and turn it into a line separated
+list using bash-printf-like functionality."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (delete-horizontal-space)
+      (while (re-search-forward "\\s-+" nil t)
+        (replace-match "\n")))))
