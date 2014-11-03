@@ -1,5 +1,13 @@
 ;;; Personal customizations
 
+;; Turn off mouse interface early in startup to avoid momentary display
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; Beginners might consider leaving this nil
+(setq inhibit-startup-message t)
+
 (put 'set-goal-column 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -41,7 +49,6 @@
 
 
 (setq-default show-trailing-whitespace t)
-;;(menu-bar-mode 0)
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t)
@@ -56,9 +63,6 @@
 ;; Don't use sudo to open read-only files
 (ad-disable-advice 'ido-find-file 'after 'find-file-sudo)
 (ad-activate 'ido-find-file)
-
-;; Beginners might consider leaving this nil
-(setq inhibit-startup-message t)
 
 (defun my-c-mode-common-hook ()
   (c-set-style "BSD")
