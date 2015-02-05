@@ -1,6 +1,6 @@
 ;;; prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
 ;;
-;; Copyright © 2011-2013 Bozhidar Batsov
+;; Copyright © 2011-2014 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -91,6 +91,11 @@ Only modes that don't derive from `prog-mode' should be listed here."
 (defcustom prelude-yank-indent-threshold 1000
   "Threshold (# chars) over which indentation does not automatically occur."
   :type 'number
+  :group 'prelude)
+
+(defcustom prelude-theme 'zenburn
+  "The default color theme, change this in your /personal/preload config."
+  :type 'symbol
   :group 'prelude)
 
 (provide 'prelude-custom)

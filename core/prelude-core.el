@@ -1,6 +1,6 @@
 ;;; prelude-core.el --- Emacs Prelude: Core Prelude functions.
 ;;
-;; Copyright © 2011-2013 Bozhidar Batsov
+;; Copyright © 2011-2014 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -59,12 +59,16 @@ With a prefix ARG always prompt for command to use."
   (with-current-buffer buffer-or-name
     major-mode))
 
+(defvar prelude-term-buffer-name "ansi"
+  "The default `ansi-term' name used by `prelude-visit-term-buffer'.
+This variable can be set via .dir-locals.el to provide multi-term support.")
+
 (defun prelude-visit-term-buffer ()
   "Create or visit a terminal buffer."
   (interactive)
   (prelude-start-or-switch-to (lambda ()
-                                (ansi-term (getenv "SHELL")))
-                              "*ansi-term*"))
+                                (ansi-term (getenv "SHELL") (concat prelude-term-buffer-name "-term")))
+                              (format "*%s-term*" prelude-term-buffer-name)))
 
 (defun prelude-search (query-url prompt)
   "Open the search url constructed with the QUERY-URL.
@@ -176,16 +180,6 @@ point reaches the beginning or end of the buffer, stop there."
           (propertize (format "A")
                       'display '(left-fringe right-triangle))
           'modification-hooks '(prelude-todo-ov-evaporate)))
-
-(defun prelude-copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
-                    (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 (defun prelude-get-positions-of-line-or-region ()
   "Return positions (beg . end) of the current line
@@ -482,6 +476,9 @@ With a prefix argument ARG, find the `user-init-file' instead."
   `(lambda (&optional arg)
      (interactive "P")
      (sp-wrap-with-pair ,s)))
+
+;; needed for prelude-goto-symbol
+(require 'imenu)
 
 (defun prelude-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
