@@ -60,10 +60,6 @@
 (column-number-mode 'true)
 (setq compile-command "make")
 
-;; Don't use sudo to open read-only files
-(ad-disable-advice 'ido-find-file 'after 'find-file-sudo)
-(ad-activate 'ido-find-file)
-
 (defun my-c-mode-common-hook ()
   (c-set-style "BSD")
   (ggtags-mode 1)
@@ -99,3 +95,17 @@
 
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (multiple-cursors smart-tabs-mode p4 ggtags company-anaconda anaconda-mode key-chord company helm-projectile helm smex ido-completing-read+ flx-ido exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line projectile operate-on-number move-text magit imenu-anywhere hl-todo guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region editorconfig easy-kill discover-my-major diminish diff-hl crux browse-kill-ring beacon anzu ace-window))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
