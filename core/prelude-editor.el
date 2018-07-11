@@ -1,6 +1,6 @@
 ;;; prelude-editor.el --- Emacs Prelude: enhanced core editing experience.
 ;;
-;; Copyright © 2011-2013 Bozhidar Batsov
+;; Copyright © 2011-2018 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -57,6 +57,11 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+;; autosave the undo-tree history
+(setq undo-tree-history-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq undo-tree-auto-save-history t)
+
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
@@ -103,10 +108,9 @@
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 ;; saveplace remembers your location in a file when saving files
-(require 'saveplace)
 (setq save-place-file (expand-file-name "saveplace" prelude-savefile-dir))
 ;; activate it for all buffers
-(setq-default save-place t)
+(save-place-mode 1)
 
 ;; savehist keeps track of some history
 (require 'savehist)
@@ -131,13 +135,11 @@
 (defun prelude-recentf-exclude-p (file)
   "A predicate to decide whether to exclude FILE from recentf."
   (let ((file-dir (file-truename (file-name-directory file))))
-    (-any-p (lambda (dir)
-              (string-prefix-p dir file-dir))
-            (mapcar 'file-truename (list prelude-savefile-dir package-user-dir)))))
+    (cl-some (lambda (dir)
+               (string-prefix-p dir file-dir))
+             (mapcar 'file-truename (list prelude-savefile-dir package-user-dir)))))
 
 (add-to-list 'recentf-exclude 'prelude-recentf-exclude-p)
-;; ignore magit's commit message files
-(add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")
 
 (recentf-mode +1)
 
@@ -173,13 +175,14 @@ The body of the advice is in BODY."
 
 (add-hook 'mouse-leave-buffer-hook 'prelude-auto-save-command)
 
-(when (version<= "24.4" emacs-version)
-  (add-hook 'focus-out-hook 'prelude-auto-save-command))
+(add-hook 'focus-out-hook 'prelude-auto-save-command)
 
 (defadvice set-buffer-major-mode (after set-major-mode activate compile)
   "Set buffer major mode according to `auto-mode-alist'."
   (let* ((name (buffer-name buffer))
          (mode (assoc-default name auto-mode-alist 'string-match)))
+    (when (and mode (consp mode))
+      (setq mode (car mode)))
     (with-current-buffer buffer (if mode (funcall mode)))))
 
 ;; highlight the current line
@@ -188,6 +191,11 @@ The body of the advice is in BODY."
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
 (diminish 'volatile-highlights-mode)
+
+;; note - this should be after volatile-highlights is required
+;; add the ability to cut the current line, without marking it
+(require 'rect)
+(crux-with-region-or-line kill-region)
 
 ;; tramp, for sudo access
 (require 'tramp)
@@ -243,7 +251,12 @@ The body of the advice is in BODY."
 ;; projectile is a project management mode
 (require 'projectile)
 (setq projectile-cache-file (expand-file-name  "projectile.cache" prelude-savefile-dir))
-(projectile-global-mode t)
+(projectile-mode t)
+
+;; avy allows us to effectively navigate to visible things
+(require 'avy)
+(setq avy-background t)
+(setq avy-style 'at-full)
 
 ;; anzu-mode enhances isearch & query-replace by showing total matches and current match position
 (require 'anzu)
@@ -252,12 +265,6 @@ The body of the advice is in BODY."
 
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
-
-;; shorter aliases for ack-and-a-half commands
-(defalias 'ack 'ack-and-a-half)
-(defalias 'ack-same 'ack-and-a-half-same)
-(defalias 'ack-find-file 'ack-and-a-half-find-file)
-(defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
 
 ;; dired - reuse current buffer by pressing 'a'
 (put 'dired-find-alternate-file 'disabled nil)
@@ -290,6 +297,7 @@ The body of the advice is in BODY."
   (interactive
    (list (not (region-active-p)))))
 
+(require 'tabify)
 (defmacro with-region-or-buffer (func)
   "When called with no active region, call FUNC on current buffer."
   `(defadvice ,func (before with-region-or-buffer activate compile)
@@ -377,6 +385,7 @@ indent yanked text (with prefix arg don't indent)."
 ;; diff-hl
 (global-diff-hl-mode +1)
 (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 ;; easy-kill
 (global-set-key [remap kill-ring-save] 'easy-kill)
@@ -384,6 +393,8 @@ indent yanked text (with prefix arg don't indent)."
 
 ;; operate-on-number
 (require 'operate-on-number)
+(require 'smartrep)
+
 (smartrep-define-key global-map "C-c ."
   '(("+" . apply-operation-to-number-at-point)
     ("-" . apply-operation-to-number-at-point)
@@ -396,6 +407,29 @@ indent yanked text (with prefix arg don't indent)."
     ("#" . apply-operation-to-number-at-point)
     ("%" . apply-operation-to-number-at-point)
     ("'" . operate-on-number-at-point)))
+
+(defadvice server-visit-files (before parse-numbers-in-lines (files proc &optional nowait) activate)
+  "Open file with emacsclient with cursors positioned on requested line.
+Most of console-based utilities prints filename in format
+'filename:linenumber'.  So you may wish to open filename in that format.
+Just call:
+
+  emacsclient filename:linenumber
+
+and file 'filename' will be opened and cursor set on line 'linenumber'"
+  (ad-set-arg 0
+              (mapcar (lambda (fn)
+                        (let ((name (car fn)))
+                          (if (string-match "^\\(.*?\\):\\([0-9]+\\)\\(?::\\([0-9]+\\)\\)?$" name)
+                              (cons
+                               (match-string 1 name)
+                               (cons (string-to-number (match-string 2 name))
+                                     (string-to-number (or (match-string 3 name) ""))))
+                            fn))) files)))
+
+;; use settings from .editorconfig file when present
+(require 'editorconfig)
+(editorconfig-mode 1)
 
 (provide 'prelude-editor)
 

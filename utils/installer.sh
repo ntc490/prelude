@@ -15,8 +15,6 @@ install_prelude () {
 
 make_prelude_dirs () {
     printf " Making the required directories.\n$RESET"
-    mkdir -p "$PRELUDE_INSTALL_DIR/vendor" "$PRELUDE_INSTALL_DIR/personal"
-    mkdir -p "$PRELUDE_INSTALL_DIR/themes"
     mkdir -p "$PRELUDE_INSTALL_DIR/savefile"
 }
 
@@ -149,7 +147,7 @@ then
 fi
 
 # If prelude is already installed
-if [ -d "$PRELUDE_INSTALL_DIR/core/prelude-core.el" ]
+if [ -f "$PRELUDE_INSTALL_DIR/core/prelude-core.el" ]
 then
     printf "\n\n$BRED"
     printf "You already have Prelude installed.$RESET\nYou'll need to remove $PRELUDE_INSTALL_DIR/prelude if you want to install Prelude again.\n"
@@ -175,18 +173,17 @@ else
     printf "$RED not found. Install aspell to benefit from flyspell-mode!$RESET\n"
 fi
 
-printf  "$CYAN Checking to see if ack is installed... "
-if hash ack 2>&- || hash ack-grep 2>&-
-then
-    printf "$GREEN found.$RESET\n"
-else
-    printf "$RED not found. You'll need it to use ack-and-a-half!$RESET\n"
-fi
-
 ### Check emacs version
 if [ $(emacs --version 2>/dev/null | sed -n 's/.*[^0-9.]\([0-9]*\.[0-9.]*\).*/\1/p;q' | sed 's/\..*//g') -lt 24 ]
 then
     printf "$YELLOW WARNING:$RESET Prelude depends on emacs $RED 24$RESET !\n"
+fi
+
+if [ -f "$HOME/.emacs" ]
+then
+    ## If $HOME/.emacs exists, emacs ignores prelude's init.el, so remove it
+    printf " Backing up the existing $HOME/.emacs to $HOME/.emacs.pre-prelude\n"
+    mv $HOME/.emacs $HOME/.emacs.pre-prelude
 fi
 
 if [ -d "$PRELUDE_INSTALL_DIR" ] || [ -f "$PRELUDE_INSTALL_DIR" ]
@@ -246,4 +243,4 @@ printf "$BBLUE | |_) |  __/ _ \ | | | |/ _  |/ _ \ \n"
 printf "$BBLUE |  __/| | |  __/ | |_| | (_| |  __/ \n"
 printf "$BBLUE |_|   |_|  \___|_|\__,_|\__,_|\___| \n\n"
 printf "$GREEN ... is now installed and ready to do thy bidding, Master $USER!$RESET\n"
-printf "$GREEN Don't forget to adjust the modules you want to use in $PRELUDE_INSTALL_DIR/prelude-modules.el!$RESET\n"
+printf "$GREEN Don't forget to adjust the modules you want to use in $PRELUDE_INSTALL_DIR/sample/prelude-modules.el!$RESET\n"

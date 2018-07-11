@@ -1,6 +1,6 @@
 ;;; prelude-helm-everywhere.el --- Enable Helm everywhere
 ;;
-;; Copyright © 2014 Tu, Do Hoang
+;; Copyright © 2014-2018 Tu, Do Hoang
 ;;
 ;; Author: Tu, Do Hoang (tuhdo1710@gmail.com)
 ;; URL: https://github.com/bbatsov/prelude
@@ -34,12 +34,14 @@
 
 ;;; Code:
 (require 'prelude-helm)
-(prelude-require-packages '(helm-descbinds))
+(prelude-require-packages '(helm-descbinds helm-ag))
 (require 'helm-eshell)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-m") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-h f") 'helm-apropos)
 (global-set-key (kbd "C-h r") 'helm-info-emacs)
@@ -47,6 +49,8 @@
 (define-key prelude-mode-map (kbd "C-c f") 'helm-recentf)
 
 (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+
+(define-key isearch-mode-map (kbd "C-o") 'helm-occur-from-isearch)
 
 ;; shell history.
 (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)

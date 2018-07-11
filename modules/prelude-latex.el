@@ -1,6 +1,6 @@
 ;;; prelude-latex.el --- Emacs Prelude: Sane setup for LaTeX writers.
 ;;
-;; Copyright © 2011-2013 Bozhidar Batsov
+;; Copyright © 2011-2018 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -54,13 +54,15 @@
 ;; AUCTeX configuration
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
+(setq TeX-close-quote "")
+(setq TeX-open-quote "")
 
 (setq-default TeX-master nil)
 
 ;; use pdflatex
 (setq TeX-PDF-mode t)
 
-;; sensible defaults for OS X, other OSes should be covered out-of-the-box
+;; sensible defaults for macOS, other OSes should be covered out-of-the-box
 (when (eq system-type 'darwin)
   (setq TeX-view-program-selection
         '((output-dvi "DVI Viewer")

@@ -11,14 +11,14 @@ following links.
 -   Common-Lisp
 -   CSS
 -   Emacs-Lisp
--   ERC
+-   [ERC](prelude-erc.md)
 -   Erlang
+-   Elixir
 -   Haskell
 -   JS
 -   Latex
 -   Lisp
 -   Markdown
--   MediaWiki
 -   Org
 -   Perl
 -   [Python](prelude-python.md)
