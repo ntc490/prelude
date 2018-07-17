@@ -46,6 +46,7 @@
 (global-set-key "\C-cn"  'cc-numbers)
 (global-set-key "\C-ct"  'cc-align-table)
 (global-set-key "\C-c^"  'cc-join-lines)
+(global-set-key "\M-*"   'pop-tag-mark)
 
 
 (setq-default show-trailing-whitespace t)
