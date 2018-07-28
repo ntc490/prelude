@@ -77,6 +77,8 @@
 (require 'mouse)
 (require 'white-space)
 (require 'multiple-cursors)
+(require 'yasnippet)
+(yas-global-mode 1)
 
 (global-set-key [remap goto-line] 'goto-line-with-feedback)
 

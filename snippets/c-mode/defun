@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: new function
+# key: defun
+# --
+$1($2);
+$1($2)
+{
+    $3
+}
+$0
