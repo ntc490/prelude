@@ -33,7 +33,6 @@
 (global-set-key "\M-o"   'tags-search)
 (global-set-key [f7]     'previous-error)
 (global-set-key [f8]     'next-error)
-;; (global-set-key [f5]     'nide-build)
 (global-set-key [f12]    'ntc-rename-func)
 (global-set-key "\C-ce"  'ediff-buffers)
 (global-set-key "\C-c "  'cc-find-other-file)
