@@ -46,7 +46,11 @@
 (global-set-key "\C-ct"  'cc-align-table)
 (global-set-key "\C-c^"  'cc-join-lines)
 (global-set-key "\M-*"   'pop-tag-mark)
-
+(global-set-key "\M-@"   'er/expand-region)
+(global-set-key (kbd "M-C-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C-.") 'mc/mark-next-like-this)
+;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (setq-default show-trailing-whitespace t)
 (setq uniquify-buffer-name-style 'reverse)
