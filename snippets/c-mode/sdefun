@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: helper function definition
+# key: sdefun
+# --
+static $1 $2($3);
+static ${1:void} ${2:fname}(${3:void})
+{
+    $4
+}
+$0
