@@ -2,9 +2,8 @@
 # name: new function
 # key: defun
 # --
-$1($2);
-$1($2)
+${1:void} ${2:func_name}(${3:void})
 {
-    $3
+    $4
 }
 $0

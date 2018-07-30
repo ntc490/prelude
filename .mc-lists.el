@@ -3,11 +3,10 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        c-electric-semi&comma
-        c-electric-colon
-        c-end-of-statement
-        easy-kill
-        sp--self-insert-command
+        c-electric-slash
+        c-electric-star
+        c-indent-line-or-region
+        crux-move-beginning-of-line
         ))
 
 (setq mc/cmds-to-run-once
