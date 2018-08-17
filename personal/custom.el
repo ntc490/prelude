@@ -48,6 +48,10 @@
 (global-set-key "\M-*"   'pop-tag-mark)
 (global-set-key "\M-@"   'er/expand-region)
 (global-set-key (kbd "M-C-c") 'mc/edit-lines)
+(global-set-key "\M-n"   'next-error)
+(global-set-key "\M-p"   'previous-error)
+(global-set-key "\M-}"   'ggtags-navigation-next-file)
+(global-set-key "\M-{"   'ggtags-navigation-previous-file)
 ;; (global-set-key (kbd "C-.") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
@@ -71,7 +75,8 @@
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 (setq minibuffer-max-depth nil)
-
+(setq ggtags-update-on-save nil)
+(setq ggtags-enable-navigation-keys nil)
 
 
 (require 'mouse);; Additional modules
@@ -108,7 +113,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (multiple-cursors smart-tabs-mode p4 ggtags company-anaconda anaconda-mode key-chord company helm-projectile helm smex ido-completing-read+ flx-ido exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line projectile operate-on-number move-text magit imenu-anywhere hl-todo guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region editorconfig easy-kill discover-my-major diminish diff-hl crux browse-kill-ring beacon anzu ace-window))))
+    (markdown-mode smart-tab yasnippet zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-tabs-mode smart-mode-line p4 operate-on-number multiple-cursors move-text magit key-chord imenu-anywhere ido-completing-read+ hl-todo helm-projectile guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist ggtags flycheck flx-ido expand-region editorconfig easy-kill discover-my-major diminish diff-hl crux company-anaconda browse-kill-ring beacon anzu ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
