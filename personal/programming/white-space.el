@@ -5,12 +5,14 @@
 
 
 (defun whitespace-set-indention-to-spaces()
+  (interactive)
   (message "indent with spaces")
   (set-variable 'indent-tabs-mode nil)
   (set-variable 'c-basic-offset 4)
   (setq tab-width 4))
   
 (defun whitespace-set-indention-to-tabs()
+  (interactive)
   (message "indent with tabs")
   (smart-tabs-mode-enable)
   (set-variable 'c-basic-offset 8)
