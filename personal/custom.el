@@ -26,8 +26,7 @@
 
 ;; Prelude overrides
 (setq prelude-whitespace nil)
-(global-set-key [remap move-beginning-of-line]
-                'move-beginning-of-line)
+(define-key prelude-mode-map (kbd "C-a") 'move-beginning-of-line)
 
 ;; --------------- Generic key binding ---------------
 
