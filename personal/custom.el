@@ -1,6 +1,6 @@
 ;; Personal customizations
 
-(load-theme 'spacemacs-dark)
+(load-theme 'spacemacs-dark t)
 (require 'prelude-helm-everywhere)
 (remove-hook 'prog-mode 'flycheck-mode)
 (global-flycheck-mode -1)
