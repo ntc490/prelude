@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Header Guards
+# key: hg
+# --
+#ifndef ${1:__H__}
+#define $1
+
+$0
+
+#endif /* $1 */
