@@ -124,77 +124,6 @@ numbers starting with the number on the top line."
 	(setq line-num (+ line-num 1))
 	(setq counter (+ counter 1))))))
 
-(defun cc-func-body()
-  "Type the return code and the name of your new function, then
-run this command. Adds parens and curly braces to the buffer and
-push a mark for the body and just after the curly brace for quick
-addition of functions.  Typical usage entails typing the return
-type and function name before executing this function."
-  (interactive)
-  ;; programmer types the optional return type and the function name
-
-  (let ((default-function-params "void"))
-    ;; add the control structure to the buffer
-    (insert-string (concat "(" default-function-params ")\n{\n\t\n}\n\n"))
-
-    ;; make sure there's one blank line at the end of the function
-    (delete-blank-lines)
-
-    ;; Push the end of the function to the mark ring
-    (push-mark)
-    (vertical-motion -2)
-
-    ;; push the start of block body to the mark ring
-    (end-of-line)
-    (push-mark)
-
-    ;; position the cursor in the parens
-    (vertical-motion -2)
-    (end-of-line)
-    (backward-char (+ (length default-function-params) 1))))
-
-(defun cc-add-prototype()
-  (interactive)
-  ;; get function type by looking at declaration
-  ;; is public prototype?
-  ;;   switch to header file if public prototype
-  ;;   look for existing prototype
-  ;;     if found leave cursor there and exit
-  ;; Look for beginning of function prototypes
-  ;; If not found, add section designator
-  ;; add prototype
-  ;; return to buffer and position
-)
-
-(defun cc-if-clause()
-  "Add an if statement by inserting the keyword, parens, and
-curly braces to the buffer.  Push the block body and just after
-the block to the mark ring so they can be quickly located by
-popping the marks, and put the cursor in the middle of the
-parens."
-  (interactive)
-  (let (beg)
-    (setq beg (point))
-
-    ;; print the parens and curly braces
-    (insert-string "if () {\n\n}\n")
-    (indent-region beg (point))
-
-    ;; push the position just after the last curly brace to the mark ring
-    (vertical-motion -1)
-    (end-of-line)
-    (push-mark)
-
-    ;; push the body of the block to the mark ring
-    (vertical-motion -1)
-    (indent-according-to-mode)
-    (push-mark)
-
-    ;; position the cursor in the parens
-    (vertical-motion -1)
-    (end-of-line)
-    (backward-char 3)))
-
 (defun cc-add-module ()
   (interactive)
   ;; ask the module name
@@ -202,57 +131,6 @@ parens."
   ;; create a .h and .c file
   ;; add headers and ifndef guards in each file
 )
-
-(defun cc-add-priv-func ()
-  (interactive)
-  ;; ask the function name
-  ;; ask the function arguments
-  ;; ask the function return type
-  ;; find the prototype section of the code and add it to the end of the list there
-  ;; find the function to follow and insert the new function template there
-  ;; place the cursor in the new block ready to write code
-)
-
-(defun cc-add-pub-func ()
-  (interactive)
-  ;; ask the function name
-  ;; ask the function arguments
-  ;; ask the function return type
-  ;; find the prototype section in the .h file and add it to the end of the list there
-  ;; find the function to follow and insert the new function template there
-  ;; place the cursor in the new block ready to write code
-)
-
-(defun cc-del-func ()
-  (interactive)
-  ;; save current location and buffer
-  ;; figure out what function point is in
-  ;; prompt if the function should be deleted
-  ;; private or public?
-  ;; if private:
-  ;;   del prototype and body in current file
-  ;; if public:
-  ;;   go to header file
-  ;;   delete prototype
-  ;;   switch to impl file
-  ;;   delete function body
-)
-
-(defun cc-get-func-name ()
-  "Get the function name of the code surrounding point.  Doesn't
-handle newline between end of function name and opening paren."
-  (save-excursion
-    (let (beg-of-func end-of-func end-of-func-name)
-      (mark-defun)
-      (setq beg-of-func (region-beginning))
-      (setq end-of-func (region-end))
-
-      (goto-char beg-of-func)
-      (setq end-of-func-name (search-forward "{" end-of-func t))
-      (goto-char beg-of-func)
-      (if (and end-of-func-name (re-search-forward "\\s-+\\([-_[:alnum:]]+\\)\\s-*(" end-of-func-name t))
-	  (match-string-no-properties 1)
-	'nil))))
 
 (defun cc-inc-order ()
   "Move the function surrounding point after the next function.
