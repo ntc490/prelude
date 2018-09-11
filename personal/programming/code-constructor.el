@@ -392,3 +392,26 @@ list using bash-printf-like functionality."
       (delete-horizontal-space)
       (while (re-search-forward "\\s-+" nil t)
         (replace-match "\n")))))
+
+(defun cc-macro-rjustify ()
+  "Right justify macro values to fill-column"
+  (interactive)
+  (save-excursion
+    (let (tail padding)
+      (end-of-line)
+      (setq tail (- (current-column) 1))
+      (setq padding (- fill-column tail))
+      (beginning-of-line)
+      (re-search-forward "^#define [-_a-zA-Z0-9]+")
+      (insert-char ?  padding)
+      padding)))
+
+(defun cc-macro-rjustify-block (beg end)
+  "Right justify macro values to fill-column for a region"
+  (interactive "r")
+  (save-excursion
+      (goto-char end)
+      (goto-char beg)
+      (while (< (point) end)
+	(setq end (+ end (cc-macro-rjustify)))
+	(forward-line))))
