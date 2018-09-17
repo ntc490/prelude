@@ -75,7 +75,8 @@
 
 (defun my-c-mode-common-hook ()
   (c-set-style "BSD")
-  (ggtags-mode 1))
+  (ggtags-mode 1)
+  (setq fill-column 80))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 (setq minibuffer-max-depth nil)
