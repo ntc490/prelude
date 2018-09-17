@@ -394,24 +394,21 @@ list using bash-printf-like functionality."
         (replace-match "\n")))))
 
 (defun cc-macro-rjustify ()
-  "Right justify macro values to fill-column"
+  "Right justify macro values to fill-column for line"
   (interactive)
   (save-excursion
-    (let (tail padding)
+    (let (tail padding bounds)
       (end-of-line)
       (setq tail (- (current-column) 1))
       (setq padding (- fill-column tail))
+      (setq bounds (point))
+      (message "Padding is %d" padding)
       (beginning-of-line)
-      (re-search-forward "^#define [-_a-zA-Z0-9]+")
-      (insert-char ?  padding)
-      padding)))
+      (if (and (> padding 0) (re-search-forward "^#define [-_a-zA-Z0-9().,]+" bounds t))
+          (progn (insert-char ?  padding) padding)))))
 
-(defun cc-macro-rjustify-block (beg end)
-  "Right justify macro values to fill-column for a region"
-  (interactive "r")
-  (save-excursion
-      (goto-char end)
-      (goto-char beg)
-      (while (< (point) end)
-	(setq end (+ end (cc-macro-rjustify)))
-	(forward-line))))
+(defun cc-macro-rjustify-block ()
+  "Right justify macro values to fill-column for a block"
+  (interactive)
+    (while (cc-macro-rjustify)
+      (forward-line)))
