@@ -42,7 +42,7 @@
 (global-set-key [f7]     'previous-error)
 (global-set-key [f8]     'next-error)
 (global-set-key [f12]    'ntc-rename-func)
-(global-set-key "\C-s"   'helm-swoop)
+;(global-set-key "\C-s"   'helm-swoop)
 (global-set-key "\C-ce"  'ediff-buffers)
 (global-set-key "\C-c "  'cc-find-other-file)
 (global-set-key "\C-ca"  'cc-append-to-line)
