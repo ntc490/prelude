@@ -5,6 +5,7 @@
       '(
         c-electric-delete-forward
         c-electric-paren
+        c-electric-semi&comma
         c-electric-slash
         c-electric-star
         c-indent-line-or-region
@@ -14,4 +15,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        helm-M-x
+        repeat
+        suspend-frame
         ))
