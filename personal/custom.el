@@ -56,6 +56,7 @@
 (global-set-key "\C-c^"  'cc-join-lines)
 (global-set-key "\M-*"   'pop-tag-mark)
 (global-set-key "\M-@"   'er/expand-region)
+(global-set-key "\M-#"   'mc/mark-next-like-this)
 (global-set-key (kbd "M-C-c") 'mc/edit-lines)
 (global-set-key "\M-n"   'next-error)
 (global-set-key "\M-p"   'previous-error)
