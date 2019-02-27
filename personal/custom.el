@@ -1,6 +1,5 @@
 ;; Personal customizations
 
-(load-theme 'spacemacs-dark t)
 (require 'prelude-helm-everywhere)
 (remove-hook 'prog-mode 'flycheck-mode)
 (global-flycheck-mode -1)
@@ -23,6 +22,8 @@
 (add-to-list 'load-path (expand-file-name "programming" prelude-personal-dir))
 (prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors expand-region
 			    yasnippet helm-swoop spacemacs-theme))
+
+(load-theme 'spacemacs-dark t)
 
 ;; Prelude overrides
 (setq prelude-whitespace nil)
