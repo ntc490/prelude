@@ -21,7 +21,8 @@
 (put 'erase-buffer 'disabled nil)
 
 (add-to-list 'load-path (expand-file-name "programming" prelude-personal-dir))
-(prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors expand-region))
+(prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors expand-region
+			    yasnippet helm-swoop spacemacs-theme))
 
 ;; Prelude overrides
 (setq prelude-whitespace nil)
