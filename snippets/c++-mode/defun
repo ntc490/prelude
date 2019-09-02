@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: new function
+# key: defun
+# --
+${1:void} ${2:func_name}(${3:void})
+{
+    $4
+}
+$0
