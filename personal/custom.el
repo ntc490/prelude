@@ -33,6 +33,12 @@
 (define-key ggtags-navigation-map (kbd "M->") 'nil)
 (define-key ggtags-navigation-map (kbd "M-<") 'nil)
 
+(defun remove-dos-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
+
 
 ;; --------------- Generic key binding ---------------
 
@@ -79,7 +85,8 @@
 (defun my-c-mode-common-hook ()
   (c-set-style "BSD")
   (ggtags-mode 1)
-  (setq fill-column 80))
+  (setq fill-column 80)
+  (remove-dos-eol))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 (setq minibuffer-max-depth nil)
