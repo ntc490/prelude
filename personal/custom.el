@@ -21,7 +21,7 @@
 
 (add-to-list 'load-path (expand-file-name "programming" prelude-personal-dir))
 (prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors expand-region
-			    yasnippet helm-swoop spacemacs-theme))
+			    yasnippet helm-swoop spacemacs-theme go-projectile))
 
 (load-theme 'wombat t)
 
@@ -95,6 +95,22 @@
   (setq fill-column 80)
   (remove-dos-eol))
 (add-hook 'c++-mode-common-hook 'my-c++-mode-common-hook)
+
+;; go get github.com/npat-efault/godef
+;; go get golang.org/x/tools/cmd/goimports
+(setq company-idle-delay nil)
+(global-set-key (kbd "C-c M-n") 'company-complete)
+(global-set-key (kbd "C-c C-n") 'company-complete)
+
+(require 'go-projectile)
+(setq gofmt-command "goimports")
+(defun my-go-mode-hook ()
+  (set (make-local-variable 'company-backends) '(company-go))
+  (local-set-key (kbd "C-c m") 'gofmt)
+  (local-set-key (kbd "M-.") 'godef-jump))
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook 'company-mode)
 
 ;; go get github.com/npat-efault/godef
 (setq minibuffer-max-depth nil)
