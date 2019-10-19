@@ -23,7 +23,7 @@
 (prelude-require-packages '(ggtags p4 smart-tabs-mode multiple-cursors expand-region
 			    yasnippet helm-swoop spacemacs-theme))
 
-(load-theme 'spacemacs-dark t)
+(load-theme 'wombat t)
 
 ;; Prelude overrides
 (setq prelude-whitespace nil)
@@ -121,7 +121,13 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))))
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(package-selected-packages
+   (quote
+    (go-projectile zop-to-char zenburn-theme yasnippet which-key volatile-highlights undo-tree spacemacs-theme smex smartrep smartparens smart-tabs-mode smart-mode-line p4 operate-on-number multiple-cursors move-text magit key-chord imenu-anywhere ido-completing-read+ hl-todo helm-swoop helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist ggtags flycheck flx-ido expand-region exec-path-from-shell editorconfig easy-kill discover-my-major diminish diff-hl crux company-anaconda browse-kill-ring beacon anzu ace-window))))
+ '(package-selected-packages
+   (quote
+    (dockerfile-mode go-projectile company-go go-eldoc ag go-imports ggo-mode go-mode yafolding php-mode alect-themes zop-to-char zenburn-theme yasnippet which-key volatile-highlights undo-tree spacemacs-theme smex smartrep smartparens smart-tabs-mode smart-mode-line p4 operate-on-number multiple-cursors move-text markdown-mode magit key-chord json-mode imenu-anywhere ido-completing-read+ hl-todo helm-swoop helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist ggtags flycheck flx-ido expand-region editorconfig easy-kill discover-my-major diminish diff-hl crux company-anaconda cmake-mode browse-kill-ring beacon anzu ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
