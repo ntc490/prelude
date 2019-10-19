@@ -89,6 +89,14 @@
   (remove-dos-eol))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
+(defun my-c++-mode-common-hook ()
+  (c-set-style "BSD")
+  (ggtags-mode 1)
+  (setq fill-column 80)
+  (remove-dos-eol))
+(add-hook 'c++-mode-common-hook 'my-c++-mode-common-hook)
+
+;; go get github.com/npat-efault/godef
 (setq minibuffer-max-depth nil)
 (setq ggtags-update-on-save nil)
 
