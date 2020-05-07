@@ -1,3 +1,9 @@
+;; Note: to avoid checking package signatures add the following two
+;; lines to the top of init.el:
+;;   (require 'package)
+;;   (setq package-check-signature nil)
+
+
 ;; Personal customizations
 
 (require 'prelude-helm-everywhere)
