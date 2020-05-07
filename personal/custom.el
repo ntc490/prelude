@@ -38,6 +38,8 @@
 (require 'ggtags)
 (define-key ggtags-navigation-map (kbd "M->") 'nil)
 (define-key ggtags-navigation-map (kbd "M-<") 'nil)
+(define-key prelude-mode-map (kbd "\C-cr") 'nil) ;; override crux rename buffer
+(rtags-enable-standard-keybindings prelude-mode-map "\C-cr")
 
 (defun remove-dos-eol ()
   "Do not show ^M in files containing mixed UNIX and DOS line endings."
@@ -59,7 +61,7 @@
 (global-set-key "\C-c "  'cc-find-other-file)
 (global-set-key "\C-ca"  'cc-append-to-line)
 (global-set-key "\C-cc"  'cc-chomp-lines)
-(global-set-key "\C-cr"  'cc-chomp-lines-regexp)
+;;(global-set-key "\C-cr"  'cc-chomp-lines-regexp)
 (global-set-key "\C-cf"  'cc-func-body)
 (global-set-key "\C-ci"  'cc-if-clause)
 (global-set-key "\C-ch"  'cc-numbers-hex)
